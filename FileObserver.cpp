@@ -2,13 +2,9 @@
 #include "FileObserver.h"
 #include <iostream>
 #include <string>
-
 #include <ctime>
-
-
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-
 using boost::property_tree::ptree;
 struct stat fileInfo;
 
@@ -21,9 +17,7 @@ FileObserver::~FileObserver()
 {
 }
 
-
 void FileObserver::readFromFile() {
-
 	ptree pt;
 	read_ini(m_fname, pt);
 	for (auto& section : pt)
@@ -35,10 +29,10 @@ void FileObserver::readFromFile() {
 	std::cout << "-----------------------------------------------------" << std::endl;
 }
 
-
 int FileObserver::hasFileChanged(time_t time1, time_t time2) {
 	return difftime(time1, time2) > 0.0 ? 1 : -1;
 }
+
 void FileObserver::readFileInfo() {
 	stat(m_fname.c_str(), &fileInfo);
 }
@@ -61,5 +55,3 @@ void FileObserver::runIsFileModified() {
 		}
 	}
 }
-
-

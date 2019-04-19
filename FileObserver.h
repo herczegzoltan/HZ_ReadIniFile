@@ -8,7 +8,6 @@ class FileObserver
 	private:
 		std::string m_fname;
 	public:
-
 		FileObserver(std::string m_fname);
 		~FileObserver();
 		void runIsFileModified();
