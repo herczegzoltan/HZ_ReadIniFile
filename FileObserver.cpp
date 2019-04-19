@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "FileObserver.h"
 #include <iostream>
+#include <string>
+
 #include <ctime>
 
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
+
 using boost::property_tree::ptree;
 struct stat fileInfo;
 
@@ -29,6 +32,7 @@ void FileObserver::readFromFile() {
 		for (auto& key : section.second)
 			std::cout << key.first << "=" << key.second.get_value<std::string>() << "\n";
 	}
+	std::cout << "-----------------------------------------------------" << std::endl;
 }
 
 
@@ -50,7 +54,7 @@ void FileObserver::runIsFileModified() {
 
 		if (hasFileChanged(new_modified, old_modified) == 1)
 		{
-			std::cout << "File's last modified time is " << ctime(&old_modified) << std::endl;
+			std::cout << "File's last modified time is " << ctime(&old_modified);
 			std::cout << "File's new modified time is  " << ctime(&new_modified) << std::endl;
 			old_modified = new_modified;
 			readFromFile();
