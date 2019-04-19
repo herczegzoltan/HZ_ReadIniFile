@@ -1,5 +1,9 @@
-// HZ_ReadIniFile.cpp : Defines the entry point for the console application.
-//
+/**
+HZ_ReadIniFile.cpp
+Purpose: Continuously checking .ini file and if it modified then writes the content to console.
+@author Zoltan Herczeg
+@date 19/04/19
+*/
 
 #include "stdafx.h"
 #include "FileObserver.h"
