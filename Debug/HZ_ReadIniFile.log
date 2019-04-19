@@ -1,4 +1,6 @@
 ﻿  stdafx.cpp
   HZ_ReadIniFile.cpp
+  FileObserver.cpp
+  Generating Code...
   HZ_ReadIniFile.vcxproj -> C:\Projects\GitRepo\HZ_ReadIniFile\Debug\HZ_ReadIniFile.exe
   HZ_ReadIniFile.vcxproj -> C:\Projects\GitRepo\HZ_ReadIniFile\Debug\HZ_ReadIniFile.pdb (Full PDB)
