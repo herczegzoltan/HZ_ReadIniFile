@@ -16,4 +16,3 @@ class FileObserver
 		void readFileInfo();
 		int	 hasFileChanged(time_t time1, time_t time2);
 };
-
