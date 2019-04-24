@@ -10,10 +10,14 @@ Purpose: Continuously checking .ini file and if it modified then writes the cont
 #include <iostream>
 #include <string>
 #include <ctime>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/ini_parser.hpp>
-using boost::property_tree::ptree;
+#include "sys/stat.h"
+#include "time.h"
+#include <windows.h>
 struct stat fileInfo;
+#include <sys/types.h>
+#include "simpleini-master\SimpleIni.h"    
+
+
 
 FileObserver::FileObserver(std::string m_fname)
 {
@@ -25,14 +29,25 @@ FileObserver::~FileObserver()
 }
 
 void FileObserver::readFromFile() {
-	ptree pt;
-	read_ini(m_fname, pt);
-	for (auto& section : pt)
-	{
-		std::cout << '[' << section.first << "]\n";
-		for (auto& key : section.second)
-			std::cout << key.first << "=" << key.second.get_value<std::string>() << "\n";
+
+	CSimpleIniA ini;
+	ini.SetUnicode();
+	ini.LoadFile(m_fname.c_str());
+	CSimpleIniA::TNamesDepend sections;
+	ini.GetAllSections(sections);
+    CSimpleIniA::TNamesDepend keys;
+
+	for (CSimpleIniA::Entry n : sections) {
+		std::cout <<"[" <<n.pItem << "]"<< '\n';
+		ini.GetAllKeys(n.pItem, keys);
+		for (CSimpleIniA::Entry m : keys) {
+			const char* pVal = ini.GetValue(n.pItem,m.pItem, "");
+			std::cout << m.pItem << " = "  << pVal<< '\n';
+
+		}
+
 	}
+
 	std::cout << "-----------------------------------------------------" << std::endl;
 }
 
@@ -51,6 +66,8 @@ void FileObserver::runIsFileModified() {
 	old_modified = fileInfo.st_mtime;
 	while (true) {
 		readFileInfo();
+
+
 		new_modified = fileInfo.st_mtime;
 
 		if (hasFileChanged(new_modified, old_modified) == 1)
