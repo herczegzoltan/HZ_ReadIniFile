@@ -28,8 +28,9 @@ FileObserver::~FileObserver()
 {
 }
 
-void FileObserver::readFromFile() {
-
+void FileObserver::readFromFile()
+{
+	
 	CSimpleIniA ini;
 	ini.SetUnicode();
 	ini.LoadFile(m_fname.c_str());
@@ -37,17 +38,16 @@ void FileObserver::readFromFile() {
 	ini.GetAllSections(sections);
     CSimpleIniA::TNamesDepend keys;
 
-	for (CSimpleIniA::Entry n : sections) {
+	for (CSimpleIniA::Entry n : sections)
+	{
 		std::cout <<"[" <<n.pItem << "]"<< '\n';
 		ini.GetAllKeys(n.pItem, keys);
 		for (CSimpleIniA::Entry m : keys) {
 			const char* pVal = ini.GetValue(n.pItem,m.pItem, "");
 			std::cout << m.pItem << " = "  << pVal<< '\n';
-
 		}
-
 	}
-
+	
 	std::cout << "-----------------------------------------------------" << std::endl;
 }
 
@@ -59,23 +59,27 @@ void FileObserver::readFileInfo() {
 	stat(m_fname.c_str(), &fileInfo);
 }
 
-void FileObserver::runIsFileModified() {
+void FileObserver::runIsFileModified()
+{
 	readFileInfo();
 	time_t new_modified = 0;
 	time_t old_modified = 0;
 	old_modified = fileInfo.st_mtime;
-	while (true) {
+	while (true) 
+	{
 		readFileInfo();
-
-
 		new_modified = fileInfo.st_mtime;
+
 
 		if (hasFileChanged(new_modified, old_modified) == 1)
 		{
-			std::cout << "File's last modified time is " << ctime(&old_modified);
-			std::cout << "File's new modified time is  " << ctime(&new_modified) << std::endl;
+
+			std::cout << "File's last modified time is " << ctime(&old_modified) << " " << old_modified;
+			std::cout << "File's new modified time is  " << ctime(&new_modified) << " " << new_modified << std::endl;
+
 			old_modified = new_modified;
 			readFromFile();
+
 		}
 	}
 }
